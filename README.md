@@ -1,3 +1,5 @@
+Fork of https://github.com/pokehanai/fluent-plugin-redis-store
+
 Redis Output Plugin For fluentd
 ===============================
 [Fluentd][] output plugin to upload/publish event data to [Redis][] storage.
@@ -101,16 +103,18 @@ Configuration
 
 ### common options for storages
 
-| Key           | Type   | Default                  | Description                                          |
-| :----         | :----- | :----------------------- | :------------                                        |
-| `key`         | string |                          | Fixed _key_ used to store(publish) in Redis          |
-| `key_path`    | string |                          | path to lookup for _key_ in the event data           |
-| `key_prefix`  | string |                          | prefix of _key_                                      |
-| `key_suffix`  | string |                          | suffix of _key_                                      |
-| `value_path`  | string | (whole event data)       | path to lookup for _value_ in the event data         |
-| `store_type`  | string | zset                     | `string`/`list`/`set`/`zset`/`publish`               |
-| `format_type` | string | plain                    | format type for _value_ (`plain`/`json`/`msgpack`)   |
-| `key_expire`  | int    | -1                       | If set, the key will be expired in specified seconds |
+| Key			 | Type   | Default                  | Description                                          |
+| :----           	 | :----- | :----------------------- | :------------                                        |
+| `key`           	 | string |                          | Fixed _key_ used to store(publish) in Redis          |
+| `key_path`      	 | string |                          | path to lookup for _key_ in the event data           |
+| `key_prefix`	  	 | string |                          | prefix of _key_                                      |
+| `key_prefix_sep`	 | string |                          | separator to put after prefix _key_                                      |
+| `key_prefix_path`  	 | string |                          | path to lookup prefix of _key_                                      |
+| `key_suffix`  	 | string |                          | suffix of _key_                                      |
+| `value_path`  	 | string | (whole event data)       | path to lookup for _value_ in the event data         |
+| `store_type`  	 | string | zset                     | `string`/`list`/`set`/`zset`/`publish`               |
+| `format_type` 	 | string | plain                    | format type for _value_ (`plain`/`json`/`msgpack`)   |
+| `key_expire`  	 | int    | -1                       | If set, the key will be expired in specified seconds |
 
 Note: either `key` or `key_path` is required.
 
