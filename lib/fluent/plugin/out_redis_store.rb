@@ -1,6 +1,6 @@
 module Fluent
   class RedisStoreOutput < BufferedOutput
-    Fluent::Plugin.register_output('redis_store', self)
+    Fluent::Plugin.register_output('redis_store_seldon', self)
 
     # redis connection
     config_param :host,      :string,  :default => '127.0.0.1'
@@ -14,6 +14,8 @@ module Fluent
     config_param :format_type,  :string,  :default => 'json'
     config_param :store_type,   :string,  :default => 'zset'
     config_param :key_prefix,   :string,  :default => ''
+    config_param :key_prefix_path,   :string,  :default => nil
+    config_param :key_prefix_sep,   :string,  :default => ''
     config_param :key_suffix,   :string,  :default => ''
     config_param :key,          :string,  :default => nil
     config_param :key_path,     :string,  :default => nil
@@ -193,7 +195,14 @@ module Fluent
       else
         k = traverse(record, @key_path).to_s
       end
-      key = @key_prefix + k + @key_suffix
+
+      if @key_prefix_path
+        prefix = traverse(record, @key_prefix_path).to_s
+      else
+        prefix = ''
+      end
+
+      key = @key_prefix + prefix + @key_prefix_sep + k + @key_suffix
 
       raise Fluent::ConfigError, "key is empty" if key == ''
       key
